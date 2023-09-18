@@ -1,5 +1,5 @@
 import { db } from "@/database/database.connection";
-import { Game, InsertGame } from "@/protocols/game.protocol";
+import { Game } from "@/protocols/game.protocol";
 import { QueryResult } from "pg";
 
 async function insert(game: Game): Promise<void> {
@@ -14,12 +14,13 @@ async function getById(id: number): Promise<Game> {
     return game.rows[0];    
 }
 
-async function update(id: number, newTitle: string, newPublisher: string, newLaunchDate: Date | null, newPlatform: string): Promise<QueryResult<InsertGame>> {
-    await db.query<InsertGame>(`UPDATE games SET title = $2, publisher = $3, launch = $4, platform = $5 WHERE id = $1`,
-    [id, newTitle, newPublisher, newLaunchDate, newPlatform])
+async function update(game: Game): Promise<void> {
+    console.log(game.id);
+    await db.query<Game>(`UPDATE games SET title = $2, publisher = $3, launch = $4, platform = $5 WHERE id = $1`,
+    [game.id, game.title, game.publisher, game.launch, game.platform])
 }
 
-async function remove(id: number): Promise<QueryResult<Game>> {
+async function remove(id: number): Promise<void> {
     await db.query<Game>(`DELETE FROM games WHERE id = $1`, [id]);
 }
 

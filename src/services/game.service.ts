@@ -1,8 +1,8 @@
 import { gameRepository } from "@/repositories/game.repository";
-import { Game, InsertGame } from "@/protocols/game.protocol";
+import { Game } from "@/protocols/game.protocol";
 
-function create(newGame: InsertGame) {
-    return gameRepository.insert(newGame);
+function create(game: Game) {
+    return gameRepository.insert(game);
 }
 
 function updateGame(game: Game) {

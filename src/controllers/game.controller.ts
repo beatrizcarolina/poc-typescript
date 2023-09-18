@@ -1,22 +1,24 @@
-import { InsertGame } from "@/protocols/game.protocol";
+import { Game } from "@/protocols/game.protocol";
 import gameService from "@/services/game.service";
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 
 async function register(req: Request, res: Response) {
-    const newGame = req.body as InsertGame;
-    await gameService.create(newGame);
+    const game = req.body as Game;
+    await gameService.create(game);
     res.sendStatus(httpStatus.CREATED);
 }
 
 async function get(req: Request, res: Response): Promise<Response> {
-    const { title } = req.params;
-    const games = await gameService.getGame(title);
-    return res.sendStatus(httpStatus.CREATED);    
+    const { id } = req.params;
+    const game = await gameService.getGame(Number(id));
+    return res.send(game);    
 }
 
-async function update() {
-    
+async function update(req: Request, res: Response) {
+    const game = req.body as Game;
+    await gameService.updateGame(game);
+    res.sendStatus(httpStatus.CREATED);
 }
 
 async function remove(req: Request, res: Response): Promise<Response> {

@@ -7,5 +7,3 @@ export type Game = {
 };
 
 export type Games = Game[];
-
-export type InsertGame = Omit<Game, "id">;
